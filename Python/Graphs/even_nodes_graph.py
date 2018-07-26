@@ -1,4 +1,53 @@
 #code
+
+# Given a connected acyclic graph with N nodes and N-1 edges, find out the pair of nodes that are at even distance from each other.
+
+# Input:
+
+# The first line of input contains an integer T denoting the number of test cases.
+
+# First line of each test case contains a single integer N denoting the number of nodes in graph.
+
+# Second line of each test case contains N-1 pair of nodes xi , yi denoting that there is an edges between them.
+
+
+# Output:
+
+# For each test case output a single integer denoting the pair of nodes which are at even distance.
+
+
+# Constraints:
+
+# 1<=T<=10
+
+# 1<=N<=10000
+
+# 1<=xi,yi<=N
+
+# Example
+
+# Input
+
+# 1
+
+# 3
+
+# 1 2 2 3
+
+# Output
+
+# 1
+
+# Explanation:
+
+# Only such pair is (1,3) where distance b/w them is 2
+
+
+############################################################################################
+
+
+
+
 depth=[]
 evens=0
 odds=0
