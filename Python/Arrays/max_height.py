@@ -1,3 +1,4 @@
+# https://www.geeksforgeeks.org/minimize-the-maximum-difference-between-the-heights/
 class Solution:
     def getMinDiff(self, arr, n, k):
         # code here

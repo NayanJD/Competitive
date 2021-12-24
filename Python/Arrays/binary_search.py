@@ -21,10 +21,10 @@ class Solution:
                 return 1
 
         if arr[i] == K:
-            return 1
+            return i
         else:
             return -1
 
 
 if __name__ == "__main__":
-    print(Solution().searchInSorted([1, 2, 3, 4, 5, 6], 6, 6))
+    print(Solution().searchInSorted([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10, 4))
