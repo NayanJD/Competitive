@@ -72,14 +72,6 @@ public:
             
         }
 
-
-        // for(auto itr = oddPossibleMap.begin(); itr != oddPossibleMap.end(); itr ++) {
-        //     cout << itr->second << ",";
-        //     if(itr->second){
-        //         count++;
-        //     }
-        // }
-        // cout << endl;
         return count;
     }
 };
