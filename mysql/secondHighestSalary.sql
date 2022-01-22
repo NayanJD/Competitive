@@ -1,0 +1,2 @@
+-- https://leetcode.com/problems/second-highest-salary/
+select IFNULL((select e.salary from (select distinct salary from Employee) e order by e.salary desc limit 1 offset 1), NULL) as SecondHighestSalary;
