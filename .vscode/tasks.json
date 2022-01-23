@@ -9,9 +9,9 @@
         "-std=gnu++17",
         "${fileDirname}/${fileBasenameNoExtension}.cpp",
         "-o",
-        "a.out",
+        "${fileDirname}/a.out",
         "&&",
-        "./a.out"
+        "${fileDirname}/a.out"
       ],
       "problemMatcher": ["$msCompile"],
       "group": {
