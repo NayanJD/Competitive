@@ -5,6 +5,7 @@
         "cmath": "cpp",
         "vector": "cpp",
         "__config": "cpp",
-        "__nullptr": "cpp"
+        "__nullptr": "cpp",
+        "unordered_map": "cpp"
     }
 }
