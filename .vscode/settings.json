@@ -6,6 +6,8 @@
         "vector": "cpp",
         "__config": "cpp",
         "__nullptr": "cpp",
-        "unordered_map": "cpp"
+        "unordered_map": "cpp",
+        "iosfwd": "cpp",
+        "iterator": "cpp"
     }
 }
