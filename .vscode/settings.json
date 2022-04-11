@@ -8,6 +8,7 @@
         "__nullptr": "cpp",
         "unordered_map": "cpp",
         "iosfwd": "cpp",
-        "iterator": "cpp"
+        "iterator": "cpp",
+        "__hash_table": "cpp"
     }
 }
