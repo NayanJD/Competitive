@@ -10,6 +10,8 @@
         "iosfwd": "cpp",
         "iterator": "cpp",
         "__hash_table": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "chrono": "cpp",
+        "ios": "cpp"
     }
 }
