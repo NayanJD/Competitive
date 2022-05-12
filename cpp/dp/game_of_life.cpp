@@ -24,7 +24,7 @@
 using namespace std;
 
 
-// Time: O(n) solution Space: O(1)
+// Time: O(n) Space: O(1)
 class Solution {
 public:
     void gameOfLife(vector<vector<int>>& board) {

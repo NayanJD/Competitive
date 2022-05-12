@@ -12,6 +12,8 @@
         "__hash_table": "cpp",
         "*.tcc": "cpp",
         "chrono": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "complex": "cpp",
+        "valarray": "cpp"
     }
 }

@@ -34,6 +34,10 @@
 ###################################################################################
 
 
+from audioop import add
+from numpy import delete
+
+
 T=int(input())
 
 def rotate(arr,d):
