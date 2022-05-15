@@ -7,6 +7,9 @@
       "command": "g++",
       "args": [
         "-std=gnu++17",
+        "-O2",
+        "-fsanitize=address",
+        "-fno-omit-frame-pointer",
         "${fileDirname}/${fileBasenameNoExtension}.cpp",
         "-o",
         "${fileDirname}/a.out",
