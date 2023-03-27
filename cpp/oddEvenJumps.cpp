@@ -14,65 +14,59 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
-#include <set>
+#include <map>
 
 using namespace std;
 
 class Solution {
 public:
     int oddEvenJumps(vector<int>& arr) {
+        int possibleJumps = 1;
+
         int n = arr.size();
-        unordered_map<int, int> evenPossibleMap;
-        unordered_map<int, int> oddPossibleMap;
-        set<int> sortedSet;
+        
+        map<int, int> sortedIndices;
+        sortedIndices[arr[n-1]] = n-1;
 
-        evenPossibleMap[arr[n - 1]] = 1;
-        oddPossibleMap[arr[n - 1]] = 1;
-        sortedSet.insert(arr[n - 1]);
+        unordered_map<int, pair<int,int>> possibleTillHere;
+        possibleTillHere[n-1] = {1,1};
 
-        int count = 1;
-        for(int i = n - 2; i >= 0; i--) {
-            // cout << "For " << arr[i] << "\n";
-            // cout << arr[i] << ",";
-            if(sortedSet.find(arr[i]) != sortedSet.end()) {
-                // cout << "Found element\n";
-                int temp = evenPossibleMap[arr[i]];
-                evenPossibleMap[arr[i]] = oddPossibleMap[arr[i]];
-                oddPossibleMap[arr[i]] = temp;
+        for(int i = n-2; i >= 0; i--){
+            pair<int,int> possibility;
+
+            if(sortedIndices.lower_bound(arr[i]) == sortedIndices.end()) {
+                possibility.first = 0;
             } else {
-                if (sortedSet.lower_bound(arr[i]) != sortedSet.begin()) {
-                    // cout << "lower_bound " << *(--sortedSet.lower_bound(arr[i])) << endl;
-
-                    int lowerBoundVal = *(--sortedSet.lower_bound(arr[i]));
-                    evenPossibleMap[arr[i]] = oddPossibleMap[lowerBoundVal];
-                } else {
-                    // cout << "No lower_bound" << endl;
-                    evenPossibleMap[arr[i]] = 0;
-                }
-
-                if (sortedSet.upper_bound(arr[i]) != sortedSet.end()) {
-                    // cout << "upper_bound " << *sortedSet.upper_bound(arr[i]) << endl;
-                    int upperBoundVal = *sortedSet.lower_bound(arr[i]);
-                    oddPossibleMap[arr[i]] = evenPossibleMap[upperBoundVal];
-                } else {
-                    // cout << "No upper_bound" << endl;
-                    oddPossibleMap[arr[i]] = 0;
-                }
+                possibility.first = possibleTillHere[(*sortedIndices.lower_bound(arr[i])).second].second; 
             }
-
-            // cout << "\noddPossibleMap[arr[i]] " << oddPossibleMap[arr[i]] << endl;
-            count += oddPossibleMap[arr[i]];
-
-            sortedSet.insert(arr[i]);
-            // for(int i: sortedSet){
-            //     cout << i << ",";
-            // }
-            // cout << endl;
+            
+            auto it = sortedIndices.lower_bound(arr[i]);
 
             
+            if(it == sortedIndices.end()) {
+
+                possibility.second = possibleTillHere[(*prev(it)).second].first;
+            } else if((*it).first == arr[i]){
+                possibility.second = possibleTillHere[(*it).second].first; 
+            } else if (it != sortedIndices.begin()) {
+                possibility.second = possibleTillHere[(*prev(it)).second].first;
+            } else {
+                possibility.second = 0;
+            }
+
+            possibleTillHere[i] = possibility;
+            sortedIndices[arr[i]] = i;
+            
+            //printf("%d (%d, %d) ", i, possibility.first, possibility.second);
+
+            if(possibility.first){
+                possibleJumps++;
+            }
         }
 
-        return count;
+        printf("\n");
+
+        return possibleJumps;
     }
 };
 
