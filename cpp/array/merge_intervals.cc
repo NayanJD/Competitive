@@ -29,40 +29,31 @@
 
 using namespace std;
 
-bool compareInterval(vector<int> i1, vector<int> i2)
-{
-    return (i1[0] < i2[0]);
-}
-
 class Solution {
 public:
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
        vector<vector<int>> result;
        
-       sort(intervals.begin(), intervals.end(), compareInterval);
+       sort(intervals.begin(), intervals.end());
        
-       map<int,int> mergedIntervals;
+        
+       int a = intervals[0][0];
+       int b = intervals[0][1];
 
-       for(auto interval: intervals){
-           auto nextLargest = mergedIntervals.lower_bound(interval[0]);
+       int n = intervals.size();
 
-           if(nextLargest == mergedIntervals.end()){
-               mergedIntervals[interval[1]] = interval[0];
+       for(int i = 1; i < n; i++){
+
+           if(intervals[i][0] <= b){
+               b = max(intervals[i][1], b);
            } else {
-               int currFirst = nextLargest->first;
-               int currSecond = nextLargest->second;
-
-               if(currFirst < interval[1]){
-                   mergedIntervals.erase(nextLargest);
-                   mergedIntervals[interval[1]] = currSecond;
-
-               }
+               result.push_back({a,b});
+               a = intervals[i][0];
+               b = intervals[i][1];
            }
        }
-        
-       for(auto ele: mergedIntervals){
-            result.push_back({ele.second, ele.first});
-       }
+       
+       result.push_back({a,b});
 
        return result;
     }
@@ -83,7 +74,7 @@ int main(){
     
     Solution sol;
 
-    vector<vector<int>> t1 = {{1,3},{2,18},{8,10},{15,18}};
+    vector<vector<int>> t1 = {{1,3},{2,6},{8,10},{15,18}};
     
     auto result = sol.merge(t1);
     print2D(result);
