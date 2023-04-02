@@ -25,50 +25,39 @@ public:
     // 0(n^2) solution
     string longestPalindrome(string s) {
         int n = s.size();
+        int max_len  = 0;
+        int start =0;
+        if(n<2)return s;
+        for(int i=1;i<n;i++){
+            int left = i-1;
+            int right  = i+1;
 
-        bool dp[n][n];
-
-        for(int i = 0; i < n; i++){
-            for(int j = i; j < n; j++){
-                dp[i][j] = true;
+            while(left>=0 && s[i]==s[left]){
+                left--;
+            }
+            while(right<n && s[i]==s[right]){
+                right++;
+            }
+            while(left>=0 && right<n && s[right]==s[left]){
+                left--;
+                right++;
+            }
+            int len = right-left-1;
+            if(len>max_len){
+                max_len  =len;
+                start = left+1;
             }
         }
-
-        int longestj = 0;
-        int longestLength = 1;
-
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < i; j++){
-                if(dp[i-1][j+1] && s[i] == s[j]){
-                    dp[i][j] = true;
-                    if(i - j + 1 > longestLength){
-                        longestj = j;
-                        longestLength = i - j + 1;
-                    }
-                } else {
-                    dp[i][j] = false;
-                }
-            }
-        }
-
-        // for(int i = 0; i < n; i++){
-        //     for(int j = 0; j < n; j++){
-        //         printf("%d ", dp[i][j]);
-        //     }
-        //     printf("\n");
-        // }
-
-        return s.substr(longestj, longestLength);
-
+    return s.substr(start,max_len);
     }
 };
 
 int main() {
-    string t1 = "a";
+    string t1 = "aaaabbaaaa";
 
     Solution sol;
 
-    printf("longest palindrom string: %s", sol.longestPalindrome(t1).c_str());
+    printf("longest palindrom string: %s\n", sol.longestPalindrome(t1).c_str());
 
     return 0;
 }
