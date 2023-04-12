@@ -36,131 +36,91 @@ using namespace std;
 class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        vector<TreeNode*> pParents, qParents;
+        TreeNode* lca = NULL;
+        dfs(root, p, q, lca);
+        return lca;
+         
+    }
 
-        dfsParent(root, pParents, p);
-        dfsParent(root, qParents, q);
-
-        int i = pParents.size() - 1, j = qParents.size() - 1;
-
-        while(i >= 0 && j >= 0){
-            if(pParents[i]->val != qParents[j]->val){
-                return pParents[i + 1];
-            }
-            i--;
-            j--;
-        }
-
-        if(i >= 0) {
-            return pParents[i + 1];
-        }
-
-        if(j >= 0) {
-            return qParents[j + 1];
+    int dfs(TreeNode* node, TreeNode*& p, TreeNode*& q, TreeNode*& ancestor) {
+        if(ancestor != NULL){
+            return 0;
         }
         
-        return NULL;
-    }
-
-    bool dfsParent(TreeNode* root, vector<TreeNode*>& parents, TreeNode* item){
-        if(root == NULL) {
-            return false;
+        if(node == NULL){
+            return 0;
         }
 
-        if(root->val == item->val) {
-            parents.push_back(root);
-            return true;
-        } else if(dfsParent(root->left, parents, item)) {
-            parents.push_back(root);
-            return true;
-        } else if(dfsParent(root->right, parents, item)) {
-            parents.push_back(root);
-            return true;
+        int isPresentInLeft = dfs(node->left, p, q, ancestor);
+        int isPresentInRight = dfs(node->right, p, q, ancestor);
+        int isPresentInHere = ((node->val == p->val) || (node->val == q->val)) ? 1: 0;
+        
+        if(isPresentInLeft + isPresentInRight + isPresentInHere == 2){
+            ancestor = node;
+            return 1;
         } else {
-            return false;
+            return isPresentInLeft + isPresentInRight + isPresentInHere; 
         }
     }
 
-    TreeNode* createTree(vector<int>& arr){
-        TreeNode* head = new TreeNode(arr[0]);
-
-        int n = arr.size();
-
-        queue<TreeNode*> q;
-        q.push(head);
-
-        TreeNode* curr;
-
-        int i = 0;
-
-        while(i < n){
-            if(arr[i] == 100001) {
-                i++;
-                continue;
-            }
-
-            curr = q.front();
-            q.pop();
-
-            // printf("For node: %d, ", curr->val);
-            if(2 * i + 1 < n && arr[2 * i + 1] != 100001) {
-                // printf("inserting left: %d, ", arr[2 * i + 1]);
-                curr->left = new TreeNode(arr[2 * i + 1]);
-                q.push(curr->left);
-            }
-
-            if(2 * i + 2 < n && arr[2 * i + 2] != 100001) {
-                // printf("inserting right: %d, \n", arr[2 * i + 2]);
-                curr->right = new TreeNode(arr[2 * i + 2]);
-                q.push(curr->right);
-            }
-
-            i++;
-        }
-
-        return head;
-    }
-
-    TreeNode* findNodeBfs(TreeNode* tree, int item) {
-        queue<TreeNode*> q;
-        q.push(tree);
-
-        TreeNode* curr;
-    
-        while(q.size() != 0){
-            curr = q.front();
-            q.pop();
-
-            // printf("%d ", curr->val);
-
-            if(curr->val == item) {
-                return curr;
-            } else {
-                if(curr->left != NULL) {
-                    q.push(curr->left);
-                }
-
-                if(curr->right != NULL) {
-                    q.push(curr->right);
-                }
-            }
-        }
-
-        // printf("\n");
-        return NULL;
-    }
 };
 
-int main() {
-    vector<int> t1 = {3,5,1,6,2,0,8,100001,100001,7,4};
 
+TreeNode* makeTree(vector<int> h) {
+    queue<TreeNode*> q;
+    
+    TreeNode* head = new TreeNode(h[0]);
+    q.push(head);
+    
+    TreeNode* currNode;
+    int i = 0, n = h.size();
+
+    while(q.size() != 0){
+        currNode = q.front();
+        q.pop();
+        
+        if(currNode == NULL){
+            i++;
+            continue;
+        }
+
+        if(2 * i + 1 < n){
+            if(h[2 * i + 1] == (int)10e9) {
+                q.push(NULL);
+            } else {
+                currNode->left = new TreeNode(h[2 * i + 1]);
+                q.push(currNode->left);
+            }
+        }
+
+        if(2 * i + 2 < n){
+            if(h[2 * i + 2] == (int)10e9) {
+                q.push(NULL);
+            } else {
+                currNode->right = new TreeNode(h[2 * i + 2]);
+                q.push(currNode->right);
+            }
+        }
+
+        i++;
+    }
+
+    return head;
+}
+
+int main(){
     Solution sol;
 
-    TreeNode* tree = sol.createTree(t1);
-
-    printf("\n");
-
-    // printf("%d", sol.findNodeBfs(tree, 1)->val);
-
-    printf("Result: %d", sol.lowestCommonAncestor(tree, sol.findNodeBfs(tree, 6), sol.findNodeBfs(tree, 6))->val);
+    TreeNode* tree = makeTree({3,5,1,6,2,0,8,(int)10e9,(int)10e9,7,4});
+    int p = 5, q = 1;
+    
+    auto lca = sol.lowestCommonAncestor(tree, new TreeNode(p), new TreeNode(q));
+    cout << "LCA: " << lca->val << endl;
+    
+    tree = makeTree({3,5,1,6,2,0,8,(int)10e9,(int)10e9,7,4});
+    p = 5, q = 4;
+    
+    lca = sol.lowestCommonAncestor(tree, new TreeNode(p), new TreeNode(q));
+    cout << "LCA: " << lca->val << endl;
 }
+
