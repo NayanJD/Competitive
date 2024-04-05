@@ -57,6 +57,16 @@ public:
   int combinationSum4(vector<int> &nums, int target) {
     int n = nums.size();
 
+    // Here is an interesting catch. If you use int or long or even
+    // long long for the vector values, the test case at LOC 86 would
+    // fail with undefined behaviour (compiled with asan). Only with
+    // unsigned int it works. The reason it behaves this way can be found
+    // more in here ->
+    // https://www.gnu.org/software/autoconf/manual/autoconf-2.63/html_node/Integer-Overflow-Basics.html#:~:text=In%20contrast%2C%20the%20C%20standard,%2C%20division%2C%20and%20left%20shift.
+    // More Reading Material:
+    //
+    // https://www.codalogic.com/blog/2022/11/01/Beware-C%2B%2B-Undefined-Behaviour#:~:text=In%20C++%2C%20overflow%20of%20signed%20integers%20results,whereas%20overflow%20of%20unsigned%20integers%20is%20defined.
+    //
     vector<unsigned int> dp(target + 1, 0);
 
     dp[0] = 1;
