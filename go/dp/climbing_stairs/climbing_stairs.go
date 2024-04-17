@@ -23,7 +23,7 @@ func nthFibonacciNumber(n int) int {
 	//
 	// a^(2^2 + 2^1 + 2^0) = a^(2^2) X a^(2^1) X a^(2^0)
 	//
-	// Power of a is down by line 34 and the multiplication is done by
+	// Power of a is down by line 35 and the multiplication is done by
 	// line 30
 	for n > 0 {
 		if (n & 1) == 1 {
